@@ -12,6 +12,9 @@ import com.example.soal_uts_bug_fixing.databinding.ActivityFormBinding
 class FormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormBinding
     companion object{
+        val EXTRA_GENDER: String? = null
+        val EXTRA_IDENTITAS: String? = null
+        val EXTRA_NAMA: String? = null
     }
 
     private lateinit var gendersArray : Array<String>
@@ -21,7 +24,7 @@ class FormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        gendersArray = resources.getStringArray()
+        gendersArray = resources.getStringArray(R.array.gender_descriptions) // saya tambahi R.array
         // Gunakan array yang sudah di buat di folder values
 
 
@@ -48,7 +51,6 @@ class FormActivity : AppCompatActivity() {
                     intentToAppointment.putExtra(EXTRA_NAMA, namaEdt.text.toString())
                     intentToAppointment.putExtra(EXTRA_IDENTITAS, identitasEdt.text.toString())
                     intentToAppointment.putExtra(EXTRA_GENDER, genderInput)
-                    intentToAppointment.putExtra(EXTRA_KELUHAN, keluhanEdt.text.toString())
                     //
                 }else{
                     Toast.makeText(this@FormActivity, "MASIH ADA KOLOM YANG KOSONG", Toast.LENGTH_SHORT).show()

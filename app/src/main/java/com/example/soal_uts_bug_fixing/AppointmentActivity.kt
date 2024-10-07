@@ -27,6 +27,9 @@ class AppointmentActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private lateinit var binding: ActivityAppointmentBinding
 
     companion object{
+        const val EXTRA_NAME = "extra_name"
+        const val EXTRA_IDENTITAS = "extra_identitas"
+        const val EXTRA_GENDER = "extra_gender"
         const val EXTRA_TELEFON = "extra_phone"
         const val EXTRA_ALAMAT = "extra_alamat"
         const val EXTRA_TIPE = "extra_tipe"
@@ -49,17 +52,17 @@ class AppointmentActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
         with(binding){
 
-            tombolKalender.setOnClickListener {
+            kalenderTxt.setOnClickListener { //saya ganti jd kalenderTxt
                 val datePicker = DatePicker()
                 datePicker.show(supportFragmentManager, "datePicker")
             }
 
-            tombolJam.setOnClickListener {
+            timerTxt.setOnClickListener { //saya ganti jadi timerTxt
                 val timePicker = TimePicker()
                 timePicker.show(supportFragmentManager, "timePicker")
             }
 
-            tombolSubmit.setOnClickListener {
+            submitBtn.setOnClickListener { //saya ganti jadi submitBtn
                 if(fieldNotEmpty()){
                     val dialog = DialogExit()
                     //
@@ -96,7 +99,7 @@ class AppointmentActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     }
 
     override fun onTimeSet(p0: android.widget.TimePicker?, hour: Int, menit:Int) {
-        timeInput = String.format("%02d:%02d", hour, minute)
+        timeInput = String.format("%02d:%02d", hour, menit) // saya ganti jadi menit
         binding.timerTxt.text = timeInput
     }
 
@@ -111,8 +114,8 @@ class AppointmentActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
                 val intentToResult = Intent(this@AppointmentActivity, ResultActivity::class.java)
                 intentToResult.putExtra(EXTRA_TELEFON, binding.kontakEdt.text.toString())
                 intentToResult.putExtra(EXTRA_TANGGAL, binding.kalenderTxt.text.toString())
-                (EXTRA_WAKTU, binding.timerTxt.text.toString())
-                (EXTRA_TIPE, tipePertemuan)
+                intentToResult.putExtra(EXTRA_WAKTU, binding.timerTxt.text.toString())  //saya tambahi intentToResult
+                intentToResult.putExtra(EXTRA_TIPE, tipePertemuan) //saya tambahi intentToResult
 
                 intentToResult.putExtra(FormActivity.EXTRA_NAMA, nama)
                 intentToResult.putExtra(FormActivity.EXTRA_IDENTITAS, identitas)
@@ -148,9 +151,9 @@ class AppointmentActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 class DatePicker: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val calendar = Calendar.getInstance()
-        //
-        //
-        //
+        val year = calendar.get(Calendar.YEAR) //saya tambahkan variabel
+        val monthOfYear = calendar.get(Calendar.MONTH) //saya tambahkan variabel
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH) //saya tambahkan variabel
         return DatePickerDialog(
             requireActivity(),
             activity as DatePickerDialog.OnDateSetListener,
